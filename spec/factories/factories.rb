@@ -26,6 +26,14 @@ FactoryGirl.define do
             authorship.save!
           end
         end
+
+        evaluator.days_ago.times.to_a.reverse.each do |i|
+          Timecop.travel(i.days.ago) do
+            book.authors.each do |author|
+              author.write_chapter! book
+            end
+          end
+        end
       end
     end
 
