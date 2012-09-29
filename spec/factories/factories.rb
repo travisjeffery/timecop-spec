@@ -19,7 +19,7 @@ FactoryGirl.define do
       end
 
       after :create do |book, evaluator|
-        Timecop.travel(evaluator.days_ago) do
+        Timecop.travel(evaluator.days_ago.days.ago) do
           book.update_attribute :created_at, Time.now
           2.times do
             authorship = book.authorships.create(FactoryGirl.build(:authorship, book: book, author: FactoryGirl.create(:author)).attributes.symbolize_keys)
